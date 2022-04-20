@@ -84,6 +84,37 @@ collectionController.getcollections = async (req,res)=>{
     }
 }
 
+function findCollection(database, nameCollection){
+    return  new Promise(async resolve => {
+        var curCollection = database.collection(nameCollection);  
+        resolve(curCollection)
+    })
+}
+
+collectionController.getOneCollection = async (req,res)=>{
+    
+    try{
+
+        var namecol = req.params.nameCollection        
+        console.log('1.  name collection ' + namecol) ;
+        
+        await client.connect();    
+        var curCollection = database.collection(namecol);     
+        // console.log(curCollection) ;
+        
+        var estimate = await  curCollection.estimatedDocumentCount();
+        console.log('3.  count collectioon  ' + estimate) ;
+        var obj = {
+            name : namecol,
+            size : estimate
+        }
+        res.send(obj);
+
+    }catch(error){
+        res.status(500).send(error)
+    }
+}
+
 //==============================getCollectionCounts=======================================//
 
  function getCollectionCounts(collection) {
@@ -284,6 +315,22 @@ collectionController.findTheVehicleList = async(req,res)=>{
     
     }
 }
+//=======================================getCount/name=================================================//
+
+collectionController.getDocumentsCollections = async (req,res)=>{
+    
+    try{
+
+        await client.connect();        
+        collex = await needdedCollections(database);
+        
+        res.send(collex);
+
+    }catch(error){
+        res.status(500).send(error)
+    }
+}
+
 //=========================================================================================//
 
 module.exports = collectionController;
