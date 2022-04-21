@@ -94,21 +94,35 @@ function findCollection(database, nameCollection){
 collectionController.getOneCollection = async (req,res)=>{
     
     try{
-
-        var namecol = req.params.nameCollection        
-        console.log('1.  name collection ' + namecol) ;
         
         await client.connect();    
-        var curCollection = database.collection(namecol);     
-        // console.log(curCollection) ;
         
-        var estimate = await  curCollection.estimatedDocumentCount();
-        console.log('3.  count collectioon  ' + estimate) ;
-        var obj = {
-            name : namecol,
-            size : estimate
-        }
-        res.send(obj);
+        var namecol = req.params.nameCollection        
+        console.log('1.  name collection ' + namecol) ;
+        mongoose.connection.db.listCollections({name:namecol})
+        .next(async function(err, collinfo) {
+            if (collinfo) {
+                console.log(collinfo.name);
+                var curCollection = database.collection(namecol);     
+                console.log(curCollection) ;
+                
+                var estimate = await  curCollection.estimatedDocumentCount();
+                console.log('3.  count collectioon  ' + estimate) ;
+                
+                var obj = {
+                    name : namecol,
+                    size : estimate
+                } 
+                
+                res.send(obj);
+                
+            }else {
+                res.status(500).send(`the requested collection doesn't exist, try again.`)
+                console.log(err);
+            }
+        });
+
+        // *****************************************************//
 
     }catch(error){
         res.status(500).send(error)
