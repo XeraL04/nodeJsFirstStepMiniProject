@@ -4,12 +4,15 @@ const {MongoClient} = require ('mongodb')
 
 //controller:
 const collectionController = require('../Controller/showCollections.controller.js')
+const imeiController = require('../Controller/ShowImei.controller')
+const vehicleController = require('../Controller/showVehicle.controller')
+
 
 //router:
 router.get("/collection", collectionController.getcollections);
 router.get("/collection/:nameCollection", collectionController.getOneCollection);
-router.get("/getImei", collectionController.findTheImei);
-router.get("/vehicleList", collectionController.findTheVehicleList);
+router.get("/getImei", imeiController.findTheImei);
+router.get("/vehicleList", vehicleController.findTheVehicleList);
 
 
 

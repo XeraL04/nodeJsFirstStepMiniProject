@@ -1,14 +1,15 @@
 const express = require ("express")
 const mongoose = require("mongoose")
 const {MongoClient} = require ('mongodb')
-const axios = require('axios')
-const cheerio = require('cheerio')
+// const axios = require('axios')
+const cors = require('cors')
 
 require("dotenv").config()
 
 const app = express();
 const port = process.env.PORT||5001
 
+app.use(cors())
 app.use(express.json())
 
 //*******************************************************************//
@@ -39,14 +40,6 @@ const mainClient = new MongoClient(process.env.URL);
 
 //routers:
 const routerCollection = require("./Router/showCollections.router.js")
-const { response } = require("express")
 
 app.use("/", routerCollection)
 
-
-
-
-
-
-
-// app.use('/collections', showCollections)

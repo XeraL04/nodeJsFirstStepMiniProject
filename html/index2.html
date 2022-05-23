@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label for="collection-name">Please, choose a collection :</label>
+
+    <select  onchange="MyJavaScript(this)">
+        
+        <option value="collection_1">data_3546365045555737401</option>
+        
+        <option value="collection_2">data_7306353057827205988</option>
+        
+        <option value="collection_3">event_7306353057827205988</option>
+    
+    </select>
+
+    <script type="text/javascript">
+        function MyJavaScript(dropdown)
+        {
+            var option_value = dropdown.options[dropdown.selectedIndex].value;
+            var option_text = dropdown.options[dropdown.selectedIndex].text;
+            alert('The option value is "' + option_value + '"\nand the text is "' + option_text + '"');
+        }
+        </script>
+        
+
+</body>
+</html>
